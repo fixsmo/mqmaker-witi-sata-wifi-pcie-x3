@@ -62,8 +62,10 @@ partition@50000 {
 };
 --------------------------------------------------------------------
 
-/target/linux/ramips/image/mt7621.mk
+.....
 16M -> 32M
+
+/target/linux/ramips/image/mt7621.mk
 -------------------------------------------------------------------------------
 define Device/mqmaker_witi
   $(Device/dsa-migration)
