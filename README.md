@@ -4,9 +4,9 @@ Hallo,
 
 Eine Lösung für das Poblem das die zwei sata Anschlüsse nicht gehen.
 
-mt7621-pci 1e140000.pcie: PCIE0 enabled	Wlan ac		gpio 19 PERST_N
-mt7621-pci 1e140000.pcie: PCIE1 enabled	Wlan bgn	gpio 8  RXD3 
-mt7621-pci 1e140000.pcie: PCIE2 enabled	SATA		gpio 7  TXD3 
+**mt7621-pci 1e140000.pcie: PCIE0 enabled	Wlan ac		gpio 19 PERST_N
+  mt7621-pci 1e140000.pcie: PCIE1 enabled	Wlan bgn	gpio 8  RXD3 
+  mt7621-pci 1e140000.pcie: PCIE2 enabled	SATA		gpio 7  TXD3** 
 
 target/linux/ramips/dts/mt7621.dtsi
 ------------------------------------------------------------------
@@ -24,6 +24,7 @@ reset-gpios = <&gpio 19 GPIO_ACTIVE_LOW>, <&gpio 8 GPIO_ACTIVE_LOW>, <&gpio 7 GP
 weitere pcie und rom ???
 
 target/linux/ramips/dts/mt7621_mqmaker_witi.dts
+
 -------------------------------------------------------------------
 partition@50000 {
 				compatible = "denx,uimage";
@@ -60,13 +61,15 @@ partition@50000 {
 	status = "okay";
 	/* GPIO 7 steuert hier den Reset des externen SATA-Chips */ 
 };
+
 --------------------------------------------------------------------
 
 .....
 16M -> 32M
 
 /target/linux/ramips/image/mt7621.mk
--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------
 define Device/mqmaker_witi
   $(Device/dsa-migration)
   IMAGE_SIZE := 32448k
