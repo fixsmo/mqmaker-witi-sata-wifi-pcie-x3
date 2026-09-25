@@ -1,0 +1,65 @@
+diff --git a/target/linux/ramips/dts/mt7621_mqmaker_witi.dts b/target/linux/ramips/dts/mt7621_mqmaker_witi.dts
+index 16755af383..f74af73cb4 100644
+--- a/target/linux/ramips/dts/mt7621_mqmaker_witi.dts
++++ b/target/linux/ramips/dts/mt7621_mqmaker_witi.dts
+@@ -16,6 +16,10 @@
+ 			linux,code = <KEY_RESTART>;
+ 		};
+ 	};
++	
++	chosen {
++		bootargs = "console=ttyS0,57600 pci=realloc";
++	};
+ };
+ 
+ &i2c {
+@@ -85,7 +89,7 @@
+ 			partition@50000 {
+ 				compatible = "denx,uimage";
+ 				label = "firmware";
+-				reg = <0x50000 0xfb0000>;
++				reg = <0x50000 0x1fb0000>;
+ 			};
+ 		};
+ 	};
+@@ -96,6 +100,7 @@
+ };
+ 
+ &pcie0 {
++	reset-gpios = <&gpio 19 GPIO_ACTIVE_LOW>;
+ 	wifi@0,0 {
+ 		compatible = "mediatek,mt76";
+ 		reg = <0x0000 0 0 0 0>;
+@@ -106,6 +111,7 @@
+ };
+ 
+ &pcie1 {
++	reset-gpios = <&gpio 8 GPIO_ACTIVE_LOW>;
+ 	wifi@0,0 {
+ 		compatible = "mediatek,mt76";
+ 		reg = <0x0000 0 0 0 0>;
+@@ -115,6 +121,11 @@
+ 	};
+ };
+ 
++&pcie2 {
++	reset-gpios = <&gpio 7 GPIO_ACTIVE_LOW>;
++	status = "okay";
++};
++
+ &gmac0 {
+ 	nvmem-cells = <&macaddr_factory_e000 0>;
+ 	nvmem-cell-names = "mac-address";
+diff --git a/target/linux/ramips/image/mt7621.mk b/target/linux/ramips/image/mt7621.mk
+index 26262eeb93..50de53bce3 100644
+--- a/target/linux/ramips/image/mt7621.mk
++++ b/target/linux/ramips/image/mt7621.mk
+@@ -2298,7 +2298,7 @@ TARGET_DEVICES += mofinetwork_mofi5500-5gxelte
+ define Device/mqmaker_witi
+   $(Device/dsa-migration)
+   $(Device/uimage-lzma-loader)
+-  IMAGE_SIZE := 16064k
++  IMAGE_SIZE := 32448k
+   DEVICE_VENDOR := MQmaker
+   DEVICE_MODEL := WiTi
+   DEVICE_PACKAGES := kmod-ata-ahci kmod-mt76x2 kmod-mmc-mtk kmod-usb3 \
